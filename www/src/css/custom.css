@@ -18,6 +18,7 @@
   --ifm-color-info: #03a9fc;
   --ifm-color-success: #00cc66;
   --ifm-color-warning: #c94b4b;
+  --ifm-font-family-base: -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
 
 .footer.footer--dark {
@@ -32,18 +33,20 @@
 }
 
 .hero {
+  margin-top: 2rem;
   background-color: var(--ifm-background-color);
   color: black;
 }
 
-.hero .hero__title {
+.hero .hero__title {  
   font-size: 3rem;
   margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
 @media screen and (min-width: 668px) {
   .hero .hero__title {
-    font-size: 4rem;
+    font-size: 4.8rem;
   }
 }
 
@@ -68,8 +71,13 @@
 .home-subtitle {
   justify-content: center;
   padding-top: 1rem;
+  padding-bottom: 2rem;
   opacity: 0.7;
   font-style: italic;
+}
+
+.home-main .container-features {
+  background: red;
 }
 
 .home-main h3 {
@@ -107,13 +115,13 @@
 .navbar__item.navbar__link[href*="github"] {
   display: flex;
   font-size: 0;
-  padding-right: 2rem;
+  padding-right: 1rem;
 }
 
 .navbar__item.navbar__link[href*="github"]:before {
   content: "";
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.5rem;
+  height: 1.5rem;
   background-image: url("/img/brand-github.svg");
   background-repeat: no-repeat;
 }

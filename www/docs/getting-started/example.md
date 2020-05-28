@@ -1,25 +1,31 @@
 ---
-id: getting-started
-title: Getting Started
+id: example
+title: Example Code
 ---
 
-*This documentation is for next-auth@beta and is not complete. It will be updated closer to release.*
+## Example Project   
 
-**This is beta software and is not ready for production use!**
+The easiest way to get started is to [check out the example project](https://github.com/iaincollins/next-auth-example).
 
-## Requirements  
+## How to Add NextAuth.js to an Existing Site
 
-This guide assumes you have new (or existing) Next.js project and have used Next.js before.
+This guide assumes you have used Next.js before.
 
-* The easiest way to get started is to [clone the example project](https://github.com/iaincollins/next-auth-example)
-* Choose an [OAuth provider](/providers) to try out and/or use passwordless email sign in
-* A MySQL, Postgress, MongoDB or SQLite database
+1. **Choose an [OAuth provider](/configuration/providers) to try it out with.**
+  
+   *GitHub is an easy OAuth service get started with.*
 
-:::tip
-You can create your own providers and use NextAuth.js with any database but to get started it's recommended to stick to one of the included providers and supported databases.
+   You can also use passwordless email sign in.
+
+2. **Create an empty MySQL, MariaDB, Postgress or MongoDB database.**
+
+   If you don't have one and just want to try it out, you can also use SQLite.
+
+:::note
+You use NextAuth.js with any OAuth service and any database; if you are trying it out for the first time it's best to stick to one of the included providers and supported databases.
 :::
 
-## Server
+### Server (API Route)
 
 To add NextAuth.js to a project create a file to handle authentication requests in the `/api` routes folder.
 
@@ -30,14 +36,6 @@ import Providers from 'next-auth/providers'
 const options = {
   site: process.env.SITE || 'http://localhost:3000',
   providers: [
-    Providers.Twitter({
-      clientId: process.env.TWITTER_ID,
-      clientSecret: process.env.TWITTER_SECRET,
-    }),
-    Providers.Google({
-      clientId: process.env.GOOGLE_ID,
-      clientSecret: process.env.GOOGLE_SECRET
-    }),
     Providers.GitHub({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET
@@ -54,11 +52,11 @@ All requests to `pages/api/auth/*` (signin, callback, signout, etc) will be hand
 Your can view the callback URLs you need to specify with your OAuth providers at `/api/auth/providers`.
 
 :::important
-* You will also need to install the appropraite npm module for your database installed 
-* See the [configuration](/configuration) page for more information and examples
+* You will also need to install the appropriate node module for your database 
+* See the [options](/getting-started/options) page for more information about options
 :::
 
-## Client 
+### Client (React Component)
 
 The `useSession()` hook is the easiest way to check if someone is signed in.
 

@@ -14,9 +14,12 @@ const features = [
     description: (
       <ul>
         <li>Full stack open source authentication</li>
-        <li>Designed for Next.js and serverless</li>
-        <li>Use with any database</li>
-        <li>Works in both client and server side React</li>
+        <li>Designed for Next.js and Serverless</li>
+        <li>Universal (client/server) rendering</li>
+        <li>
+            Bring Your Own Database (any database)<br/>
+            <em>(MySQL, MariaDB, Postgres, MongoDB…)</em>
+        </li>
       </ul>
     )
   },
@@ -25,8 +28,10 @@ const features = [
     imageUrl: 'img/undraw_social.svg',
     description: (
       <ul>
-        <li>Built-in support for popular OAuth services (Google, Facebook, Twitter, Auth0…)</li>
-        <li>Use with any OAuth service (1.x or 2.x)</li>
+        <li>Sign in with any OAuth service provider</li>
+        <li>Built in profiles for many oAuth services <br/>
+            <em>(Google, Facebook, Twitter, Auth0…)</em>
+        </li>
         <li>Passwordless email sign in</li>
         <li>Secure account linking</li>
       </ul>
@@ -37,7 +42,7 @@ const features = [
     imageUrl: 'img/undraw_secure.svg',
     description: (
       <ul>
-        <li>CSRF protection (double submit cookie)</li>
+        <li>CSRF protection with double submit cookie</li>
         <li>Cookies are signed, server-only, prefixed</li>
         <li>Session tokens secret from JavaScript</li>
         <li>Doesn't require client side JavaScript</li>
@@ -80,7 +85,7 @@ function Home () {
               )}
               href='https://next-auth-example.now.sh'
             >
-              Try it out
+              Live Demo
             </a>
             <Link
               className={classnames(
@@ -95,40 +100,47 @@ function Home () {
         </div>
       </header>
       <main className='home-main'>
-        <div className='container'>
-          <section className={styles.features}>
+        <section className={styles.features}>
+          <div className='container'>
             <div className='row'>
               {features.map((props, idx) => (
                 <Feature key={idx} {...props} />
               ))}
             </div>
-          </section>
-          <section>
-            <div className='row'>
-              <div className='col'>
-                <h2 className='text--center'>Examples</h2>
-              </div>
-            </div>
-            <div className='row'>
-              <div className='col col--6'>
-                <div className='code'>
-                  <h4 className='code-heading'>Serverless function</h4>
-                  <CodeBlock className='javascript'>{serverlessFunctionCode}</CodeBlock>
+          </div>
+        </section>
+        <section>
+          <div className='container'>
+              <div className='row'>
+                <div className='col'>
+                  <h1 className='text--center'>npm install next-auth</h1>
                 </div>
               </div>
-              <div className='col col--6'>
-                <div className='code'>
-                  <h4 className='code-heading'>React component</h4>
-                  <CodeBlock className='javascript'>{reactComponentCode}</CodeBlock>
+              <div className='row'>
+                <div className='col col--6'>
+                  <div className='code'>
+                    <h4 className='code-heading'>Step 1 – Create API route</h4>
+                    <CodeBlock className='javascript'>{serverlessFunctionCode}</CodeBlock>
+                  </div>
+                </div>
+                <div className='col col--6'>
+                  <div className='code'>
+                    <h4 className='code-heading'>Step 2 – Use React component</h4>
+                    <CodeBlock className='javascript'>{reactComponentCode}</CodeBlock>
+                  </div>
+                </div>
+              </div>
+              <div className='row'>
+                <div className='col'>
+                  <h2 className='text--center'>That's all the code you need!</h2>
                 </div>
               </div>
             </div>
-            <div className='container'>
-              <div className='row home-subtitle'>
-                {siteConfig.title} is not affiliated with Vercel or Next.js
-              </div>
-            </div>
-          </section>
+        </section>
+        <div className='container'>
+          <div className='row home-subtitle'>
+            {siteConfig.title} is not affiliated with Vercel or Next.js
+          </div>
         </div>
       </main>
     </Layout>
@@ -137,20 +149,20 @@ function Home () {
 
 const reactComponentCode = `
 import React from 'react'
-import NextAuth from 'next-auth'
+import { useSession } from 'next-auth/client'
 
 export default () => {
-  const [ session, loading ] = NextAuth.useSession()
+  const [ session, loading ] = useSession()
 
   return <p>
+    {!session && <>
+      Not signed in <br/>
+      <a href="/api/auth/signin">Sign in</a>
+    </>}
     {session && <>
       Signed in as {session.user.email} <br/>
       <a href="/api/auth/signout">Sign out</a>
     </>}
-    {!session && 
-      Not signed in <br/>
-      <a href="/api/auth/signin">Sign in</a>
-    }
   </p>
 }
 `.trim()
@@ -167,7 +179,7 @@ const options = {
       clientSecret: process.env.GOOGLE_SECRET
     }),
     Providers.Email({
-      server: 'smtp://username:password@smtp.example.com',
+      server: process.env.MAIL_SERVER,
       from: '<no-reply@example.com>'
     }),
   ],

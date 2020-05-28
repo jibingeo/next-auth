@@ -32,7 +32,13 @@
   display: flex;
   align-items: center;
   padding-top: 2rem;
+  margin: 4rem auto;
   width: 100%;
+  background: #f9f9f9;
+}
+
+.features ul li {
+  margin-bottom: .5rem;
 }
 
 .featureImage {

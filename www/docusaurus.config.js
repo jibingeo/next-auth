@@ -17,15 +17,9 @@ module.exports = {
       */
       links: [
         {
-          to: '/getting-started',
+          to: '/getting-started/introduction',
           activeBasePath: 'docs',
           label: 'Documentation',
-          position: 'left'
-        },
-        {
-          to: '/about',
-          activeBasePath: 'docs',
-          label: 'About',
           position: 'left'
         },
         {
@@ -50,12 +44,8 @@ module.exports = {
       style: 'dark',
       links: [
         {
-          // title: 'About',
+          title: 'About',
           items: [
-            {
-              label: 'About',
-              to: '/about'
-            },
             {
               label: 'Contributors',
               to: '/contributors'
